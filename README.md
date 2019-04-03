@@ -1,18 +1,16 @@
 TODO
 
+read images
+1st layers
+pixel to pixel correspondance
 
-- Deep Net binary mapper examples  
-    https://stackoverflow.com/questions/33556259/deep-learning-for-mapping-large-binary-input
-    
-    https://github.com/neptune-ml/open-solution-mapping-challenge
-- Deep Net mapper 
-- GPU python 
-- training
+Use CNN
+https://www.tensorflow.org/alpha/tutorials/images/intro_to_cnns
 
 # Deep Net Binary Mapper
 
 Dataset consists of ”original” and modified "data".
-Each original correspons to a modified one 
+Each original correspons to a modified one
 
 This code implements a Deep Net binary mapper in Python that maps the modified codes into the originals.
 
@@ -20,8 +18,15 @@ The results are evaluted based on the regeneration accuracy of the mapper with r
 
 ## List of the required libraries
 
+pip install numpy
+pip install pillow
+pip install tensorflow
+pip install keras
+
 ## How to run the training process
 
 ## How to run the test process
 
 ## How to run your code on the GPU
+
+Pytorch contains the torhc.nn.DataParallel library
