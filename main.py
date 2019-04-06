@@ -1,37 +1,52 @@
-import helpers
-# print("Deep Net Binary Mapper")
-folder_original = helpers.cwd()  + "/codes/original";
-folder_modified = helpers.cwd()  + "/codes/modified";
-
-
-import numpy as np
+from typing import Dict, List
 from PIL import Image
-def readImage(folderAbsolutePath: str, fileName: str) -> np.array:
-    im = Image.open(folder + "/" fileName)
+import os
+import numpy as np
+import autoencoder
+
+folder_original = os.getcwd() + "/codes/original/"
+folder_modified = os.getcwd() + "/codes/modified/"
+folders = [folder_original, folder_modified]
+
+
+def readBmpImage(ImageAbsolutePath: str) -> np.array:
+    im = Image.open(ImageAbsolutePath)
     p = np.array(im)
-    return im
+    return p
 
-# map original to modified
 
-# Each binary symbol is formed by 6 × 6 pixels.
+def getImagesList(folder_name: str) -> List:
+    imagesFilenames: List[str] = os.listdir(folder_name)
+    (imagesFilenames).sort()
+    imagesFullPathNames: List[str] = [
+        folder_name + im for im in imagesFilenames
+    ]
+    assert imagesFullPathNames[0] == folder_name + "code_dm_0001_imag.bmp"
+    assert imagesFullPathNames[-1] == folder_name + "code_dm_0150_imag.bmp"
 
-# from tensorflow.keras.models import Sequential
-#
-# model = Sequential()
-#
-# TODO tensorflo.keras
-# from keras.layers import Dense
-#
-# model.add(Dense(units=64, activation='relu', input_dim=100))
-# model.add(Dense(units=10, activation='softmax'))
-#
-#
-# model.compile(loss='categorical_crossentropy',
-#               optimizer='sgd',
-#               metrics=['accuracy'])
-#
-# # model.compile(loss=keras.losses.categorical_crossentropy,
-# #               optimizer=keras.optimizers.SGD(lr=0.01, momentum=0.9, nesterov=True))
-#
-# # x_train and y_train are Numpy arrays --just like in the Scikit-Learn API.
-# model.fit(x_train, y_train, epochs=5, batch_size=32)
+    images = [readBmpImage(im) for im in imagesFullPathNames]
+    return np.array(images)
+
+def getImagesDataModified():
+    train = imagesPerFolder[folder_modified][:120]
+    test = imagesPerFolder[folder_modified][120:-1]
+    return (train, test)
+
+def getImagesDataOriginal():
+    train = imagesPerFolder[folder_original][:120]
+    test = imagesPerFolder[folder_original][:-1]
+    return (train, test)
+
+imagesPerFolder: dict = {folder: getImagesList(folder) for folder in folders}
+
+x_train = imagesPerFolder[folder_modified][:120]
+x_train_test = imagesPerFolder[folder_modified][120:]
+x_noise = imagesPerFolder[folder_original][:120]
+x_noise_test = imagesPerFolder[folder_original][120:]
+
+autoencoder.runAutoencoder(
+    x_train,
+    x_train_test,
+    x_noise,
+    x_noise_test
+)

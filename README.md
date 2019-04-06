@@ -1,8 +1,9 @@
 TODO
 
 read images
-1st layers
-pixel to pixel correspondance
+
+denoising example
+https://towardsdatascience.com/how-to-reduce-image-noises-by-autoencoder-65d5e6de543
 
 Use CNN
 https://www.tensorflow.org/alpha/tutorials/images/intro_to_cnns
@@ -19,6 +20,7 @@ The results are evaluted based on the regeneration accuracy of the mapper with r
 ## List of the required libraries
 
 pip install numpy
+pip install matplotlib
 pip install pillow
 pip install tensorflow
 pip install keras
